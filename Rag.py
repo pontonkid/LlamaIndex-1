@@ -85,4 +85,36 @@ import sys
 logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logging.getLogger().addHandler(logging.StreamHandler(stream=sys.stdout))
 
+query_engine = vector_index.as_query_engine(response_mode="compact")
+
+response = query_engine.query("What is ARM-RAG?")
+
+display_response(response)
+
+query="What machine learning techniques does ARM-RAG leverage?"
+
+from llama_index.embeddings.base import similarity
+query_engine =index.as_query_engine(response_mode="tree_summarize")
+
+response = query_engine.query(query)
+
+from IPython.display import HTML, display
+
+# Using HTML with inline CSS for styling (blue color)
+html_text = f'<p style="color: #1f77b4; font-size: 14px;"><b>{response}</b></p>'
+display(HTML(html_text))
+
+from llama_index.memory import ChatMemoryBuffer
+
+memory = ChatMemoryBuffer.from_defaults(token_limit=1500)
+
+chat_engine = index.as_chat_engine(
+    chat_mode="context",
+    memory=memory,
+    system_prompt=(
+        "You are a chatbot, able to have normal interactions"
+        " about ARM-RAG"
+    ),
+)
+
 
