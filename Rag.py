@@ -72,3 +72,17 @@ service_context = ServiceContext.from_defaults(llm=llm, embed_model="local:BAAI/
 from llama_index import VectorStoreIndex
 
 vector_index = VectorStoreIndex.from_documents(documents, service_context=service_context)
+
+from llama_index import SummaryIndex
+
+summary_index = SummaryIndex.from_documents(documents, service_context=service_context)
+
+from llama_index.response.notebook_utils import display_response
+
+import logging
+import sys
+
+logging.basicConfig(stream=sys.stdout, level=logging.INFO)
+logging.getLogger().addHandler(logging.StreamHandler(stream=sys.stdout))
+
+
