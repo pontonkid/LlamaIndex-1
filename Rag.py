@@ -118,3 +118,9 @@ chat_engine = index.as_chat_engine(
 )
 
 
+response = chat_engine.chat("What machine learning techniques does ARM-RAG leverage?")
+print(response)
+
+response= chat_engine.chat("give me real world examples of apps/system i can build leveraging ARM-RAG?")
+
+print(response)
