@@ -40,3 +40,35 @@ llm = HuggingFaceLLM(
 
 
 resp = llm.complete("What is ARM-RAG? ")
+
+from IPython.display import HTML, display
+
+# Assuming resp contains the response
+resp = llm.complete("What is ARM-RAG?")
+
+# Using HTML with inline CSS for styling (gray color, smaller font size)
+html_text = f'<p style="color: #1f77b4; font-size: 14px;"><b>{resp}</b></p>'
+display(HTML(html_text))
+
+# create client and a new collection
+chroma_client = chromadb.EphemeralClient()
+chroma_collection = chroma_client.create_collection("quickstart")
+
+# define embedding function
+embed_model = HuggingFaceEmbedding(model_name="BAAI/bge-base-en-v1.5")
+
+# set up ChromaVectorStore and load in data
+vector_store = ChromaVectorStore(chroma_collection=chroma_collection)
+storage_context = StorageContext.from_defaults(vector_store=vector_store)
+service_context = ServiceContext.from_defaults(llm=llm, embed_model=embed_model)
+index = VectorStoreIndex.from_documents(
+    documents, storage_context=storage_context, service_context=service_context
+
+from llama_index import ServiceContext
+
+service_context = ServiceContext.from_defaults(llm=llm, embed_model="local:BAAI/bge-small-en-v1.5")
+
+
+from llama_index import VectorStoreIndex
+
+vector_index = VectorStoreIndex.from_documents(documents, service_context=service_context)
