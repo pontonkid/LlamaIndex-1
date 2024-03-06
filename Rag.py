@@ -124,3 +124,8 @@ print(response)
 response= chat_engine.chat("give me real world examples of apps/system i can build leveraging ARM-RAG?")
 
 print(response)
+
+response = chat_engine.chat("so ARM-RAG is just all about explanations in real world application?")
+
+print(response)
+
